@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.js"],"names":[],"mappings":";;;;;;AAAA;;AACA;;;;;;AAEA,IAAM,cAAc,4BAAgB;AAClC;AADkC,CAAhB,CAApB;;kBAIe,W","file":"index-compiled.js","sourcesContent":["import { combineReducers } from 'redux';\nimport PostsReducer from './reducer_posts';\n\nconst rootReducer = combineReducers({\n  posts: PostsReducer\n});\n\nexport default rootReducer;\n"]}
