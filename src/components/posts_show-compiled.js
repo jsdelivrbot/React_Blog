@@ -24,84 +24,81 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var PostsIndex = function (_Component) {
-    _inherits(PostsIndex, _Component);
+var PostsShow = function (_Component) {
+    _inherits(PostsShow, _Component);
 
-    function PostsIndex() {
-        _classCallCheck(this, PostsIndex);
+    function PostsShow() {
+        _classCallCheck(this, PostsShow);
 
-        return _possibleConstructorReturn(this, (PostsIndex.__proto__ || Object.getPrototypeOf(PostsIndex)).apply(this, arguments));
+        return _possibleConstructorReturn(this, (PostsShow.__proto__ || Object.getPrototypeOf(PostsShow)).apply(this, arguments));
     }
 
-    _createClass(PostsIndex, [{
+    _createClass(PostsShow, [{
         key: 'componentWillMount',
         value: function componentWillMount() {
-            this.props.fetchPosts();
+            this.props.fetchPost(this.props.params.id);
         }
     }, {
-        key: 'renderPosts',
-        value: function renderPosts() {
-            return this.props.posts.map(function (post) {
-                return _react2.default.createElement(
-                    'li',
-                    { className: 'list-group-item', key: post.id },
-                    _react2.default.createElement(
-                        _reactRouter.Link,
-                        { to: "posts/" + post.id },
-                        _react2.default.createElement(
-                            'span',
-                            { className: 'pull-xs-right' },
-                            post.categories
-                        ),
-                        _react2.default.createElement(
-                            'strong',
-                            null,
-                            post.title
-                        )
-                    )
-                );
-            });
+        key: 'onDeleteClick',
+        value: function onDeleteClick() {
+            this.props.deletePost(this.props.params.id);
         }
     }, {
         key: 'render',
         value: function render() {
+            var post = this.props.post;
+
+
+            if (!post) {
+                return _react2.default.createElement(
+                    'div',
+                    null,
+                    'Loading...'
+                );
+            }
+
             return _react2.default.createElement(
                 'div',
                 null,
                 _react2.default.createElement(
-                    'div',
-                    { className: 'text-xs-right' },
-                    _react2.default.createElement(
-                        _reactRouter.Link,
-                        { to: '/posts/new', className: 'btn btn-primary' },
-                        'Add a Post'
-                    )
+                    _reactRouter.Link,
+                    { to: '/' },
+                    'Back To Index'
+                ),
+                _react2.default.createElement(
+                    'button',
+                    {
+                        className: 'btn btn-danger pull-xs-right',
+                        onClick: this.onDeleteClick.bind(this) },
+                    'Delete Post'
                 ),
                 _react2.default.createElement(
                     'h3',
                     null,
-                    'Posts'
+                    post.title
                 ),
                 _react2.default.createElement(
-                    'ul',
-                    { className: 'list-group' },
-                    this.renderPosts()
+                    'h6',
+                    null,
+                    'Categories: ',
+                    post.categories
+                ),
+                _react2.default.createElement(
+                    'p',
+                    null,
+                    post.content
                 )
             );
         }
     }]);
 
-    return PostsIndex;
+    return PostsShow;
 }(_react.Component);
 
 function mapStateToProps(state) {
-    return { posts: state.posts.all };
+    return { post: state.posts.post };
 }
 
-// function mapDispatchToProps(dispatch) {
-//     return bindActionCreators({ fetchPosts }, dispatch);
-// }
+exports.default = (0, _reactRedux.connect)(mapStateToProps, { fetchPost: _index.fetchPost, deletePost: _index.deletePost })(PostsShow);
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, { fetchPosts: _index.fetchPosts })(PostsIndex);
-
-//# sourceMappingURL=posts_index-compiled.js.map
+//# sourceMappingURL=posts_show-compiled.js.map

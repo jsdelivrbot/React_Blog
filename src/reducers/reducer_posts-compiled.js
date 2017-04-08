@@ -13,6 +13,8 @@ exports.default = function () {
     switch (action.type) {
         case _index.FETCH_POSTS:
             return _extends({}, state, { all: action.payload.data });
+        case _index.FETCH_POST:
+            return _extends({}, state, { post: action.payload.data });
         default:
             return state;
     }
